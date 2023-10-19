@@ -24,10 +24,10 @@ RUN apk update && \
     apk upgrade --available && \
     rm -rf /var/cache/apk/*
 
-# Set a password for the new user (replace 'password' with your desired password)
+# Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
 
-# Grant sudo privileges to the new user
+# Grant sudo privileges to the USER
 RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 
 # Changing USER
@@ -35,13 +35,14 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
 # Generate ssh-key for git
-RUN ssh-keygen -t ed25519 -f "/home/${USERNAME}/.ssh/git" -N ""
+RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" && \
+    ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # Better git defaults
 RUN git config --global init.defaultBranch main
 
 # Creating a mount directory
-RUN mkdir -p /home/${USERNAME}/lmount
+RUN mkdir -p ~/lmount
 
 # Start sh
 ENTRYPOINT ["/bin/sh"]
