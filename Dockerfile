@@ -35,14 +35,17 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
 # Generate ssh-key for git
-RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" && \
-    ssh-keyscan github.com >> ~/.ssh/known_hosts
+RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" -C "lantern"
+RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+# Install 7zip, 7zzs
+RUN wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -xJvf - 7zzs -C "$HOME/.local/bin"
 
 # Better git defaults
 RUN git config --global init.defaultBranch main
 
 # Creating a mount directory
-RUN mkdir -p ~/lmount
+RUN mkdir -p "$HOME/lmount"
 
 # Start sh
 ENTRYPOINT ["/bin/sh"]
