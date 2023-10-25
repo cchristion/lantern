@@ -9,4 +9,7 @@
 
 2. Running the build image
 
-        docker run -it -v ~/:/home/lantern
+        docker run -it -v \
+            -$(pwd):/home/lantern \
+            --u $(id -u):$(id -g) \
+            -<IMAGE ID>
