@@ -11,7 +11,7 @@ docker build \
 2. Running the build image
 ```shell
 docker run -it \
-     -v $(pwd):/home/lantern \
-     -u $(id -u):$(id -g) \
-     <IMAGE ID>
+    -v $(pwd):/home/lantern \
+    -u $(id -u):$(id -g) \
+    <IMAGE ID>
 ```
