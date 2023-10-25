@@ -8,7 +8,7 @@ docker build \
     --build-arg uid="$(id -u)" .
 ```
 
-1. Running the build image
+2. Running the build image
 ```shell
 docker run -it \
      -v $(pwd):/home/lantern \
