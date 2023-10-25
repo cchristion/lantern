@@ -26,6 +26,11 @@ RUN apk update && \
     apk upgrade --available && \
     rm -rf /var/cache/apk/*
 
+# Install 7zip, 7z
+RUN $( cd "/usr/local/bin" && \
+    wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -xJvf - 7zzs  && \
+    ln -s 7zzs 7z )
+
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
 
@@ -39,12 +44,6 @@ WORKDIR /home/${USERNAME}
 # Generate ssh-key for git
 RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" -C "lantern"
 RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-# Install 7zip, 7zzs
-RUN $(
-    cd "/usr/local/bin" && \
-    wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -xJvf - 7zzs  && \
-    ln -s 7zzs 7s )
 
 # Better git defaults
 RUN git config --global init.defaultBranch main
