@@ -18,7 +18,9 @@ RUN addgroup --gid $gid --system ${USERNAME} \
 
 # Installing softwares
 RUN apk update && \
+    apk add xz && \
     apk add git && \
+    apk add tar && \
     apk add sudo && \
     apk add openssh && \
     apk upgrade --available && \
@@ -39,7 +41,10 @@ RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" -C "lantern"
 RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # Install 7zip, 7zzs
-RUN wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -xJvf - 7zzs -C "$HOME/.local/bin"
+RUN $(
+    cd "/usr/local/bin" && \
+    wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -xJvf - 7zzs  && \
+    ln -s 7zzs 7s )
 
 # Better git defaults
 RUN git config --global init.defaultBranch main
