@@ -3,7 +3,6 @@ FROM alpine:3.18
 
 # Metadata
 LABEL project="lantern"
-LABEL version="0.6"
 LABEL maintainer="cchristion"
 
 # Environment variables
@@ -13,23 +12,15 @@ ARG USERNAME=lantern
 ARG PASSWORD=lantern
 
 # Adding user
-RUN addgroup --gid $gid --system ${USERNAME} \
-    && adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
+RUN addgroup --gid $gid --system ${USERNAME} && \
+    adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
 
 # Installing softwares
-RUN apk update && \
-    apk add xz && \
-    apk add git && \
-    apk add tar && \
-    apk add sudo && \
-    apk add openssh && \
-    apk upgrade --available && \
-    rm -rf /var/cache/apk/*
+RUN apk add --upgrade --no-cache \
+    xz git tar sudo openssh
 
 # Install 7zip, 7z
-RUN $( cd "/usr/local/bin" && \
-    wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -xJvf - 7zzs  && \
-    ln -s 7zzs 7z )
+RUN wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -C "/usr/local/bin" -xvJf - 7zzs
 
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
@@ -42,8 +33,9 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
 # Generate ssh-key for git
-RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" -C "lantern"
-RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
+RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" -C "lantern"  && \
+    ssh-keyscan github.com >> ~/.ssh/known_hosts && \
+    eval $(ssh-agent) && ssh-add ~/.ssh/git
 
 # Better git defaults
 RUN git config --global init.defaultBranch main
