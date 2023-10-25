@@ -40,8 +40,5 @@ RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" -C "lantern"  && \
 # Better git defaults
 RUN git config --global init.defaultBranch main
 
-# Creating a mount directory
-RUN mkdir -p "$HOME/lmount"
-
 # Start sh
 ENTRYPOINT ["/bin/sh"]
