@@ -16,8 +16,8 @@ RUN addgroup --gid $gid --system ${USERNAME} && \
     adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
 
 # Installing softwares
-RUN apk add --upgrade --no-cache \
-    git sudo openssh
+RUN apk add --upgrade --no-cache sudo \
+    git openssh
 
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd

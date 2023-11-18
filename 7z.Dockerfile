@@ -16,8 +16,8 @@ RUN addgroup --gid $gid --system ${USERNAME} && \
     adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
 
 # Installing softwares
-RUN apk add --upgrade --no-cache \
-    xz tar sudo
+RUN apk add --upgrade --no-cache sudo \
+    xz tar
 
 # Install 7zip, 7z
 RUN wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -C "/usr/local/bin" -xvJf - 7zzs
