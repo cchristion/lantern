@@ -17,10 +17,7 @@ RUN addgroup --gid $gid --system ${USERNAME} && \
 
 # Installing softwares
 RUN apk add --upgrade --no-cache \
-    xz git tar sudo openssh
-
-# Install 7zip, 7z
-RUN wget -O - https://7-zip.org/a/7z2301-linux-x64.tar.xz | tar -C "/usr/local/bin" -xvJf - 7zzs
+	zsh git
 
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
@@ -32,13 +29,5 @@ RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
-# Generate ssh-key for git
-RUN ssh-keygen -t ed25519 -f ~/.ssh/git -N "" -C "lantern"  && \
-    ssh-keyscan github.com >> ~/.ssh/known_hosts && \
-    eval $(ssh-agent) && ssh-add ~/.ssh/git
-
-# Better git defaults
-RUN git config --global init.defaultBranch main
-
-# Start sh
-ENTRYPOINT ["/bin/sh"]
+# Start zsh
+ENTRYPOINT ["/bin/zsh"]
