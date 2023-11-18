@@ -5,7 +5,9 @@
 docker build \
     -t "$(date +%Y%m%d%H%M%S)" \
     --build-arg gid="$(id -g)" \
-    --build-arg uid="$(id -u)" .
+    --build-arg uid="$(id -u)" \
+	-f <file path> \
+	.
 ```
 
 2. Running the build image
@@ -13,5 +15,4 @@ docker build \
 docker run -it \
     -v $(pwd):/home/lantern \
     -u $(id -u):$(id -g) \
-    <IMAGE ID>
-```
+    <image id>
