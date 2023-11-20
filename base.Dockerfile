@@ -15,15 +15,21 @@ ARG PASSWORD=lantern
 RUN addgroup --gid $gid --system ${USERNAME} && \
     adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
 
-# Installing softwares
-RUN apk add --upgrade --no-cache sudo \
-	zsh git
-
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
 
 # Grant sudo privileges to the USER
 RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
+
+# Installing softwares
+RUN apk add --upgrade --no-cache sudo \
+	zsh git
+
+# Custom ---
+
+
+
+# ---
 
 # Changing USER
 USER ${USERNAME}

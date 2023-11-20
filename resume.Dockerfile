@@ -15,19 +15,28 @@ ARG PASSWORD=lantern
 RUN addgroup --gid $gid --system ${USERNAME} && \
     adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
 
-# Installing softwares
-RUN apk add --upgrade --no-cache sudo zsh git \
-    texlive-full
-
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
 
 # Grant sudo privileges to the USER
 RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 
+# Installing softwares
+RUN apk add --upgrade --no-cache \
+    sudo zsh git
+
+# Custom ---
+
+# Installing softwares
+
+RUN apk add --upgrade --no-caches \
+    texlive-full
+
+# ---
+
 # Changing USER
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
-# Start sh
+# Start zsh
 ENTRYPOINT ["/bin/zsh"]
