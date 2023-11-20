@@ -17,7 +17,7 @@ RUN addgroup --gid $gid --system ${USERNAME} && \
 
 # Installing softwares
 RUN apk add --upgrade --no-cache sudo zsh git \
-    texlive
+    texlive-full
 
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
