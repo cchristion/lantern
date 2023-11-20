@@ -16,8 +16,8 @@ RUN addgroup --gid $gid --system ${USERNAME} && \
     adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
 
 # Installing softwares
-RUN apk add --upgrade --no-cache sudo \
-    texlive-full
+RUN apk add --upgrade --no-cache sudo zsh git \
+    texlive
 
 # Set a password for the USER
 RUN echo "${USERNAME}:${USERNAME}" | chpasswd
@@ -30,4 +30,4 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
 # Start sh
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/zsh"]
