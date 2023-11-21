@@ -1,5 +1,13 @@
 # lantern
 
+1. Create your Dockerfile
+```shell
+cd src
+cat head.src \
+    <choose required src's>
+    tail.src > ../Dockerfile
+```
+
 1. Build an image
 ```shell
 docker build \
@@ -10,7 +18,7 @@ docker build \
 	.
 ```
 
-2. Running the build image
+1. Running the build image
 ```shell
 docker run -it \
     -v $(pwd):/home/lantern \
