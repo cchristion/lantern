@@ -27,16 +27,3 @@ RUN apk add --upgrade --no-cache \
 
 # Custom ---
 
-# Installing softwares
-
-RUN apk add --upgrade --no-caches \
-    texlive-full
-
-# ---
-
-# Changing USER
-USER ${USERNAME}
-WORKDIR /home/${USERNAME}
-
-# Start zsh
-ENTRYPOINT ["/bin/zsh"]
