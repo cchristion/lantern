@@ -24,3 +24,4 @@ docker run -it \
     -v $(pwd):/home/lantern \
     -u $(id -u):$(id -g) \
     <image id>
+```
