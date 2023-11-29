@@ -6,4 +6,4 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
 # Start zsh
-ENTRYPOINT ["/bin/zsh"]
+ENTRYPOINT ["/usr/bin/tmux"]

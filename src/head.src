@@ -13,7 +13,9 @@ ARG PASSWORD=lantern
 
 # Adding user
 RUN addgroup --gid $gid --system ${USERNAME} && \
-    adduser --uid $uid --system --ingroup ${USERNAME} --home /home/${USERNAME} ${USERNAME}
+    adduser --uid $uid --system \
+    --ingroup ${USERNAME} --home /home/${USERNAME} \
+    --shell /bin/zsh ${USERNAME}
 
 # Set a password for the USER
 RUN echo "${USERNAME}:${PASSWORD}" | chpasswd
@@ -23,7 +25,7 @@ RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 
 # Installing softwares
 RUN apk add --upgrade --no-cache \
-    sudo zsh git
+    sudo zsh git tmux
 
 # Custom ---
 
