@@ -5,5 +5,16 @@
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
+RUN git clone --depth 1 https://github.com/cchristion/watermelon.git && \
+    cd watermelon && \
+    cp -rsv $(pwd)/.config ~/ && \
+    cp -rsv $(pwd)/.zshenv ~/.zshenv  && \
+    mkdir -p ${XDG_CACHE_HOME:-$HOME/.cache}/zsh ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins  && \
+    cd
+
+RUN git clone --depth 1 https://github.com/zdharma-continuum/fast-syntax-highlighting ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/fast-syntax-highlighting
+
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/powerlevel10k
+
 # Start zsh
 ENTRYPOINT ["/bin/zsh"]
