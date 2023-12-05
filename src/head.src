@@ -25,7 +25,7 @@ RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 
 # Installing softwares
 RUN apk add --upgrade --no-cache \
-    sudo zsh git tmux
+    sudo zsh git tmux direnv
 
 # Custom ---
 
