@@ -1,4 +1,0 @@
-# Installing texlive and make 
-
-RUN apk add --upgrade --no-cache \
-    texlive-full make

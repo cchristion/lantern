@@ -25,7 +25,13 @@ RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 
 # Installing softwares
 RUN apk add --upgrade --no-cache \
-    sudo zsh git tmux direnv
+    sudo 7zip curl git openssh zsh
 
-# Custom ---
+# Changing USER
+USER ${USERNAME}
+WORKDIR /home/${USERNAME}
 
+RUN curl --proto '=https' --tlsv1.3 -sSf https://raw.githubusercontent.com/cchristion/watermelon/main/install.sh -o /tmp/install.sh && sh /tmp/install.sh
+
+# Start zsh
+ENTRYPOINT ["/bin/zsh"]
