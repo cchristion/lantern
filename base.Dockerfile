@@ -25,7 +25,7 @@ RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 
 # Installing softwares
 RUN apk add --upgrade --no-cache \
-    7zip bash curl git openssh sudo zsh
+    7zip bash curl git openssh sudo tmux zsh
 
 # Changing USER
 USER ${USERNAME}
