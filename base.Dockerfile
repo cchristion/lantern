@@ -25,13 +25,17 @@ RUN echo "${USERNAME} ALL=(ALL) ALL" >> /etc/sudoers
 
 # Installing softwares
 RUN apk add --upgrade --no-cache \
-    sudo 7zip curl git openssh zsh
+    7zip bash curl git openssh sudo zsh
 
 # Changing USER
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
-RUN curl --proto '=https' --tlsv1.3 -sSf https://raw.githubusercontent.com/cchristion/watermelon/main/install.sh -o /tmp/install.sh && sh /tmp/install.sh
+# Install watermelon
+RUN curl --proto '=https' --tlsv1.3 -sSf https://raw.githubusercontent.com/cchristion/watermelon/main/install.sh | sh
+
+# Install pyenv
+RUN export PYENV_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}/.pyenv" && curl --proto '=https' --tlsv1.3 -sSf https://pyenv.run | bash
 
 # Start zsh
 ENTRYPOINT ["/bin/zsh"]
