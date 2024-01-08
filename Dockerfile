@@ -31,7 +31,5 @@ RUN apk add --upgrade --no-cache \
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
-RUN curl --proto '=https' --tlsv1.3 -sSf https://raw.githubusercontent.com/cchristion/watermelon/main/install.sh -o /tmp/install.sh && sh /tmp/install.sh
-
 # Start zsh
 ENTRYPOINT ["/bin/zsh"]
