@@ -1,0 +1,25 @@
+# Disable .lesshst
+export LESSHISTFILE=-
+
+# Aliases
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias l="ls -A --color=always --group-directories-first -h -X -v"
+alias ll="ls -A --color=always --group-directories-first -h -X -v -l"
+alias c="clear"
+alias h="history"
+alias e=$EDITOR
+
+# Start tmux. Should stay close to the top.
+# command -v tmux > /dev/null && {[[ -z ${TMUX+X} ]] && { exec tmux new-session && exit ;};}
+
+# Setup direnv
+command -v direnv > /dev/null && eval "$(direnv hook zsh)"
+
+# Setup zoxide
+command -v zoxide > /dev/null && eval "$(zoxide init zsh)" && alias cd="z"
+
+# Setup pyenv
+export PYENV_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"
